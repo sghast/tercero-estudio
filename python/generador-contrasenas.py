@@ -22,4 +22,4 @@ random.shuffle(obligatorios)
 for i in range (len(obligatorios)):
     contrasena += obligatorios[i]
 
-print(f"Tu contraseña es: {contrasena}\nNO LA COMPARTAS CON NADIE")
+print(f"Tu contraseña temporal es: {contrasena}\nNO LA COMPARTAS CON NADIE")
