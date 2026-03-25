@@ -1,65 +1,78 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-class Empleado {
-    String nombre;
-    public Empleado(String nombre) {
-        this.nombre = nombre;
+class Vehiculo {
+    String marca;
+
+    public Vehiculo (String marca) {
+        this.marca = marca;
     }
 
-    void calcularSueldo() {
-        System.out.println("Empleado: " + nombre + ", Sueldo base");
+    void mostrarInfo () {
+        System.out.printf("Vehículo de marca: %s", marca);
     }
 }
 
-class EmpleadoTiempoCompleto extends Empleado {
-    int bono;
+class Auto extends Vehiculo {
+    int puertas;
 
-    public EmpleadoTiempoCompleto(String nombre, int bono) {
-        super(nombre);
-        this.bono = bono;
+    public Auto (String marca, int puertas) {
+        super(marca);
+        this.puertas = puertas;
     }
 
     @Override
-    void calcularSueldo() {
-        System.out.println("Empleado: " + nombre + 
-                           ", Sueldo con bono: " + (800 + bono));
+    void mostrarInfo () {
+        System.out.printf("Auto %s, Puertas: %d\n", marca, puertas);
+    }
+}
+
+class Moto extends Vehiculo {
+    int cilindraje;
+
+    public Moto (String marca, int cilindraje) {
+        super(marca);
+        this.cilindraje = cilindraje;
+    }
+
+    @Override
+    void mostrarInfo () {
+        System.out.printf("Moto %s, Cilindraje: %dcc\n", marca, cilindraje);
     }
 }
 
 public class polimorfismo {
-    public static void main(String[] args) {
+    public static void main (String args []) {
+        Scanner datos = new Scanner (System.in);
+        ArrayList<Vehiculo> vehiculos = new ArrayList<>();
 
-        Scanner sc = new Scanner(System.in);
-        ArrayList<Empleado> empleados = new ArrayList<>();
+        System.out.print("Cuántos vehículos desea ingresar?\n> ");
+        int n = datos.nextInt();
 
-        System.out.print("¿Cuántos empleados deseas ingresar? ");
-        int n = sc.nextInt();
-        sc.nextLine();
         for (int i = 0; i < n; i++) {
-            System.out.println("\nEmpleado #" + (i + 1));
-            System.out.print("Nombre: ");
-            String nombre = sc.nextLine();
+            System.out.print("Tipo del vehículo #" + (i+1) + "? (1 = Auto, 2 = Moto)\n> ");
+            int tipo = datos.nextInt();
+            datos.nextLine();
 
-            System.out.print("Tipo (1 = Normal, 2 = Tiempo Completo): ");
-            int tipo = sc.nextInt();
-
-            if (tipo == 2) {
-                System.out.print("Bono: ");
-                int bono = sc.nextInt();
-                empleados.add(new EmpleadoTiempoCompleto(nombre, bono));
+            if (tipo == 1) {
+                System.out.print("Marca: ");
+                String marca = datos.nextLine();
+                System.out.print("Número de puertas: ");
+                int puertas = datos.nextInt();
+                vehiculos.add(new Auto(marca, puertas));
             } else {
-                empleados.add(new Empleado(nombre));
+                System.out.print("Marca: ");
+                String marca = datos.nextLine();
+                System.out.print("Cilindraje: ");
+                int cilindraje = datos.nextInt();
+                vehiculos.add(new Moto(marca, cilindraje));
             }
-
-            sc.nextLine();
         }
 
-        System.out.println("\n--- SUELDOS ---");
-        for (Empleado e : empleados) {
-            e.calcularSueldo();
-        }
+        datos.close();
 
-        sc.close();
+        for (Vehiculo v : vehiculos) {
+            v.mostrarInfo();
+        }
     }
 }
